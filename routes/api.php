@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,12 @@ Route::post('student',[StudentController::class,'upload']);
 Route::put('student/edit/{id}',[StudentController::class,'edit']);
 
 Route::delete('student/edit/{id}',[StudentController::class,'delete']);
+
+Route::post('/register', [UserController::class,'register']);
+Route::post('/login', [UserController::class,'login']);
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('/user', [UserController::class,'user']);
+    
+});
 
