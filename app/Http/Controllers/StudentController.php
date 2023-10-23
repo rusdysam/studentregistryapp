@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Student;
 
+use App\Http\Resources\StudentResource;
+
 use Validator;
 
 class StudentController extends Controller
@@ -13,14 +15,9 @@ class StudentController extends Controller
     public function index()
     {
         
-        $student = Student::all();
-        $data = [
-
-            'status'=> 200,
-            'student'=> $student
-
-        ];
-        return response()->json($data,200);
+        $student = Student::paginate(15);
+        
+        return StudentResource::collection($student);
 
     }
 
@@ -128,4 +125,18 @@ class StudentController extends Controller
         ];
         return response()->json($data,200);
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $student = Student::where('name', 'like', "%$query%")
+                            ->orWhere('email', 'like', "%$query%")
+                            ->get();
+
+        return response()->json(['students'=>$student]);
+    }
+
+    
 }
+
