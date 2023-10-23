@@ -12,6 +12,7 @@ use Validator;
 
 class StudentController extends Controller
 {
+    // Get all the student information
     public function index()
     {
         
@@ -21,6 +22,7 @@ class StudentController extends Controller
 
     }
 
+    // Upload section
     public function upload(Request $request)
     {
 
@@ -66,6 +68,7 @@ class StudentController extends Controller
         }
     }
 
+    // Edit section
     public function edit(Request $request,$id)
     {
         $validator= Validator::make($request->all(),
@@ -110,6 +113,7 @@ class StudentController extends Controller
         }
     }
 
+    // Delete section
     public function delete($id)
     {
 
@@ -126,6 +130,7 @@ class StudentController extends Controller
         return response()->json($data,200);
     }
 
+    // Search feature
     public function search(Request $request)
     {
         $query = $request->input('query');
